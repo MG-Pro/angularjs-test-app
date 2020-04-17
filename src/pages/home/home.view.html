@@ -1,0 +1,14 @@
+<main class="home">
+  <div class="container">
+    <h1 class="title">{{ $ctrl.title }}</h1>
+    <img src="img/logo.png">
+    <h2>LIST</h2>
+    <ul class="list">
+      <li class="item" ng-repeat="(key, value) in $ctrl.list">
+        <h3>{{ value.title }}</h3>
+        <p>{{ value.body }}</p>
+      </li>
+    </ul>
+  </div>
+</main>
+
