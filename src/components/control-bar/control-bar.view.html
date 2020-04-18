@@ -1,0 +1,28 @@
+<div class="control-bar">
+  <div class="control-bar__content">
+    <div class="control-bar__item">
+      <label for="filter">Categories: </label>
+      <select
+        id="filter"
+        ng-model="$ctrl.currentCategory"
+        ng-options="option.Name.en for option in $ctrl.categoryList"
+      ></select>
+    </div>
+    <div class="control-bar__item">
+      <label for="on_page">Games on page: </label>
+      <select name="" id="on_page">
+        <option
+
+          value="">Games</option>
+      </select>
+    </div>
+    <div class="control-bar__item">
+      <label for="sort">Sort by: </label>
+      <select name="" id="sort">
+        <option
+
+          value="">Games</option>
+      </select>
+    </div>
+  </div>
+</div>

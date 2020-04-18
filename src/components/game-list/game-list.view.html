@@ -9,6 +9,11 @@
   </li>
 
 </ul>
-<div class="game-list__footer">
-  <button class="game-list__btn">More games</button>
+<div
+  ng-if="!$ctrl.isLastPage"
+  class="game-list__footer">
+  <button
+    ng-click="$ctrl.moreItemsHandler()"
+    class="game-list__btn"
+  >More games</button>
 </div>

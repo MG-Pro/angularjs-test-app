@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+@import "vars";
 
 * {
   margin: 0;
@@ -45,6 +46,7 @@ a {
   text-align: center;
   font-size: 14px;
   &__content {
+    padding: 0 10px;
     display: flex;
     justify-content: space-between;
   }
@@ -67,6 +69,7 @@ a {
   background-color: #092d45;
   padding: 20px 0;
   &__content {
+    padding: 0 10px;
     display: flex;
     justify-content: space-between;
   }
@@ -90,7 +93,8 @@ a {
   flex-wrap: wrap;
 
   &__item {
-    max-width: 200px;
+    width: 200px;
+    height: 155px;
     padding: 10px;
   }
   &__footer {
@@ -99,7 +103,7 @@ a {
   }
   &__btn {
     background: none;
-    color: #0284e0;
+    color: $blue;
     font-size: 18px;
     min-width: 250px;
     border: 2px solid;
@@ -115,6 +119,7 @@ a {
 .game-card {
   position: relative;
   font-size: 0;
+  height: 100%;
   &__title {
     position: absolute;
     left: 10px;
@@ -142,12 +147,12 @@ a {
 
   }
   &__btn {
-    color: #ff0000;
+    color: $red;
     font-size: 25px;
     font-weight: 700;
     transition: all 0.5s;
     -webkit-text-stroke: 1px #1d1d1d;
-    -webkit-text-fill-color: #0284e0;
+    -webkit-text-fill-color: $blue;
     padding: 3px 3px;
     margin-left: -7px;
     border: 3px solid transparent;
@@ -156,7 +161,7 @@ a {
     }
   }
   &__like {
-    -webkit-text-stroke: 2px #ff0000;
+    -webkit-text-stroke: 2px $red;
     font-size: 35px;
     color: #4e4e4e;
     cursor: pointer;
@@ -164,9 +169,29 @@ a {
       color: #502323;
     }
     &.active {
-      color: #ff0000;
+      color: $red;
       -webkit-text-stroke: 1px #4e4e4e;
     }
   }
-
+}
+.control-bar {
+  padding: 10px;
+  &__content {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__item {
+    margin-left: 50px;
+    color: $blue;
+    label {
+      margin-right: 20px;
+    }
+    select {
+      border: 2px solid $blue;
+      min-width: 150px;
+      color: $blue;
+      background: none;
+      padding: 3px;
+    }
+  }
 }

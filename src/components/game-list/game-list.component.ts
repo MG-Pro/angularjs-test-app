@@ -4,13 +4,15 @@ class GameListComponent {
   template = require('./game-list.view.html')
   bindings = {
     list: '<',
-  }
-  constructor() {
-    console.log(this)
+    isLastPage: '<',
+    onMoreItems: '&'
   }
   controller = class {
-    list: object[]
+    onMoreItems: Function
 
+    moreItemsHandler() {
+      this.onMoreItems()
+    }
   }
 }
 

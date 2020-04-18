@@ -1,6 +1,11 @@
 <div class="home">
+  <control-bar-component
+    category-list="$ctrl.categoryList"
+  ></control-bar-component>
   <game-list-component
     list="$ctrl.pageList"
+    on-more-items="$ctrl.addItems()"
+    is-last-page="$ctrl.isLastPage"
   ></game-list-component>
 </div>
 
