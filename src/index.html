@@ -7,7 +7,18 @@
   <base href="/">
 </head>
 <body>
-<navigation></navigation>
-<ui-view></ui-view>
+<div class="wrapper">
+  <div class="content-wrapper">
+    <header-component></header-component>
+    <div class="container">
+      <main class="main">
+        <ui-view></ui-view>
+      </main>
+    </div>
+  </div>
+  <div class="footer-wrapper">
+    <footer-component></footer-component>
+  </div>
+</div>
 </body>
 </html>

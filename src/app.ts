@@ -1,21 +1,26 @@
 import angular from 'angular'
 import '@uirouter/angularjs'
 import {routing} from './app.config'
-import nav from './components/navigation/navigation.component'
-import about from './pages/about/about.component'
+import header from './components/header/header.component'
+import footer from './components/footer/footer.component'
 import home from './pages/home/home.component'
 import apiService from './services/apiService'
+import gameCard from './components/game-card/game-card.component'
+import gameList from './components/game-list/game-list.component'
+
+
 
 import './assets/css/common.scss'
 
-console.log(home, about)
 const app = angular
   .module('app', [
     'ui.router',
-    nav.name,
-    about.name,
+    header.name,
+    footer.name,
     home.name,
-    apiService.name
+    apiService.name,
+    gameCard.name,
+    gameList.name
   ])
   .config(routing)
 

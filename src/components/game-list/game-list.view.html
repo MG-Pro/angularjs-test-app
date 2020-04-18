@@ -1,0 +1,14 @@
+<ul class="game-list">
+  <li
+    class="game-list__item"
+    ng-repeat="(key, value) in $ctrl.list track by value.ID"
+  >
+    <game-card-component
+      game-item="value"
+    ></game-card-component>
+  </li>
+
+</ul>
+<div class="game-list__footer">
+  <button class="game-list__btn">More games</button>
+</div>
