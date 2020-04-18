@@ -14,7 +14,7 @@ module.exports = (() => {
     mode: isProd ? 'production' : 'development',
     devtool: isProd ? 'source-map' : 'eval-source-map',
     entry: {
-      app: './src/app.js',
+      app: './src/app.ts',
     },
     output: {
       path: __dirname + '/dist',
@@ -25,9 +25,16 @@ module.exports = (() => {
     module: {
       rules: [
         {
-          test: /\.js$/,
-          loader: 'babel-loader',
+          test: /\.ts$/,
           exclude: /node_modules/,
+          use: [
+            {
+              loader: 'ts-loader',
+              // options: {
+              //   transpileOnly: true,
+              // }
+            }
+          ]
         },
         {
           test: /\.css$/,
@@ -53,6 +60,9 @@ module.exports = (() => {
           options: {esModule: false}
         },
       ],
+    },
+    resolve: {
+      extensions: ['.js', '.json', '.ts', '.tsx']
     },
     plugins: [
       new CleanWebpackPlugin(),

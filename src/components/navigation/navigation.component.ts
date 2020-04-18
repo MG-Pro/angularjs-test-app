@@ -1,16 +1,14 @@
 import angular from 'angular'
 
 class NavigationController {
-  constructor () {
-
-  }
+  constructor () {}
 }
 
 class NavigationComponent {
-  constructor () {
-    this.template = require('./navigation.view.html')
-    this.controller = NavigationController
-  }
+  template = require('./navigation.view.html')
+  controller = NavigationController
+
+  constructor () {}
 }
 
 export default angular
