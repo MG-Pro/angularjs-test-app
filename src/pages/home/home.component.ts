@@ -6,45 +6,33 @@ import ICategory from '../../types/ICategory'
 class HomeComponent {
   template = require('./home.view.html')
   controller = class {
-    static $inject = ['$scope', 'apiService']
+    static $inject = ['apiService', 'dataService']
 
-    private fullList: IGame[] = []
-    private currentPage: number = 1
     isLastPage: boolean = false
-    itemOnPage: number = 25
     pageList: IGame[] = []
-    categoryList: ICategory[] = [{
-      ID: '',
-      Name: {
-        en: 'All'
-      }
-    }]
+    categoryList: ICategory[] = []
 
 
-    constructor($scope, private apiService, private dataService) {
-      console.log(dataService)
+    constructor(private apiService, private dataService) {
+      dataService.registerObserverCallback(this.listUpdateHandler.bind(this))
     }
 
     $onInit() {
       this.apiService.getItems().then((res) => {
         console.log(res.data)
         this.categoryList.push(...res.data.categories)
-        this.dataService.list = res.data.games.slice(0, 78)
-        this.pageList = this.getPageList()
+        this.dataService.list = res.data.games
+
       })
     }
 
-    getPageList(startIndex: number = 0): IGame[] {
-      return this.dataService.list.slice(startIndex, startIndex + this.itemOnPage)
+    listUpdateHandler(list: IGame[]) {
+      this.pageList = list
+      this.isLastPage = this.dataService.isLastPage
     }
 
-    addItems() {
-      this.currentPage++
-      const startIndex: number = this.itemOnPage * this.currentPage - this.itemOnPage
-      this.pageList.push(...this.getPageList(startIndex))
-      if(startIndex + this.itemOnPage >= this.dataService.list.length) {
-        this.isLastPage = true
-      }
+    addItemsHandler() {
+      this.dataService.incCurrentPage()
     }
 
   }

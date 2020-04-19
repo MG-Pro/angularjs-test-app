@@ -1,0 +1,3 @@
+interface IItemName {
+  en: String
+}

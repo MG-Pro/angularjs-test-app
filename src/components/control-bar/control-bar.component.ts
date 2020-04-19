@@ -7,12 +7,29 @@ class ControlBarComponent {
     categoryList: '<'
   }
   controller = class {
+    static $inject = ['$scope', 'dataService']
+
     currentCategory: ICategory
     categoryList: ICategory[]
 
-    $onInit() {
-      this.currentCategory = this.categoryList[0]
+    constructor(private $scope, private dataService) {
+      $scope.$watch(() => $scope.$ctrl.currentCategory, (newValue: ICategory) => {
+        this.dataService.currentCategory = newValue
+      })
     }
+
+    $onInit() {
+      this.categoryList.unshift({
+        ID: '',
+        Name: {
+          en: 'All'
+        }
+      })
+      this.currentCategory = this.categoryList[0]
+
+    }
+
+
   }
 }
 

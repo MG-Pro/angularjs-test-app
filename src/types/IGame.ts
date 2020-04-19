@@ -1,6 +1,6 @@
 export default interface IGame {
   ID: string,
-  Name: object,
-  CategoryID: number[],
+  Name: IItemName,
+  CategoryID: string[],
   ImageFullPath: string
 }

@@ -67,18 +67,27 @@ a {
 
 .header {
   background-color: #092d45;
-  padding: 20px 0;
+  padding: 15px 0;
+  min-height: 70px;
   &__content {
     padding: 0 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+  &__data {
+    color: $title_gray;
+    text-align: right;
+    &-item:first-child {
+      margin-bottom: 5px;
+    }
   }
 }
 .logo {
   &__link {
     font-size: 28px;
     font-weight: 700;
-    color: #cecece;
+    color: $title_gray;
     text-decoration: none;
 
     &_footer {

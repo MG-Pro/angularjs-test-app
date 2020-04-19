@@ -14,5 +14,5 @@ class ApiService {
 }
 
 export default angular
-  .module('apiServiceModule', [])
+  .module('apiService', [])
   .service('apiService', ApiService)

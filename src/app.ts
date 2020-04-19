@@ -15,7 +15,6 @@ import controlBar from './components/control-bar/control-bar.component'
 
 import './assets/css/common.scss'
 
-console.log(dataService)
 const app = angular
   .module('app', [
     'ui.router',
@@ -34,3 +33,4 @@ const app = angular
 angular.bootstrap(document, [app.name], {
   strictDi: true
 })
+
