@@ -1,9 +1,7 @@
-import angular from 'angular'
 import IGame from '../../types/IGame'
 import ICategory from '../../types/ICategory'
 
-
-class HomeComponent {
+export default class HomeComponent {
   template = require('./home.view.html')
   controller = class {
     static $inject = ['apiService', 'dataService']
@@ -37,7 +35,3 @@ class HomeComponent {
 
   }
 }
-
-export default angular
-  .module('home', [])
-  .component('homeComponent', new HomeComponent())

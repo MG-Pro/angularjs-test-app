@@ -1,13 +1,6 @@
-import angular from 'angular'
-
-class FooterComponent {
+export default class FooterComponent {
   template = require('./footer.view.html')
-  controller = class FooterController {
+  controller = class {
     constructor () {}
   }
 }
-
-export default angular
-  .module('footer', [])
-  .component('footerComponent', new FooterComponent())
-

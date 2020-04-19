@@ -1,7 +1,7 @@
 import angular from 'angular'
 import IGame from '../../types/IGame'
 
-class HeaderComponent {
+export default class HeaderComponent {
   template = require('./header.view.html')
   controller = class {
     static $inject = ['dataService']
@@ -19,6 +19,3 @@ class HeaderComponent {
   }
 }
 
-export default angular
-  .module('header', [])
-  .component('headerComponent', new HeaderComponent())

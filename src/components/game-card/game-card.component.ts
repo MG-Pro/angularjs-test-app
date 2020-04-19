@@ -1,6 +1,4 @@
-import angular from 'angular'
-
-class GameCardComponent {
+export default class GameCardComponent {
   template = require('./game-card.view.html')
   bindings = {
     gameItem: '<',
@@ -11,6 +9,3 @@ class GameCardComponent {
   }
 }
 
-export default angular
-  .module('gameCard', [])
-  .component('gameCardComponent', new GameCardComponent())

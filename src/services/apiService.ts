@@ -1,6 +1,4 @@
-import angular from 'angular'
-
-class ApiService {
+export default class ApiService {
   static $inject = ['$http']
 
   constructor (private $http) {}
@@ -12,7 +10,3 @@ class ApiService {
 
 
 }
-
-export default angular
-  .module('apiService', [])
-  .service('apiService', ApiService)

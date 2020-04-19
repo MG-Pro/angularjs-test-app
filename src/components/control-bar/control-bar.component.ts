@@ -1,8 +1,7 @@
-import angular from 'angular'
 import ICategory from '../../types/ICategory'
 import ISortItem from '../../types/ISortItem'
 
-class ControlBarComponent {
+export default class ControlBarComponent {
   template = require('./control-bar.view.html')
   bindings = {
     categoryList: '<'
@@ -51,8 +50,3 @@ class ControlBarComponent {
     }
   }
 }
-
-export default angular
-  .module('controlBar', [])
-  .component('controlBarComponent', new ControlBarComponent())
-

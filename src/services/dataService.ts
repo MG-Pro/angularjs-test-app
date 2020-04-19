@@ -1,9 +1,8 @@
-import angular from 'angular'
 import IGame from '../types/IGame'
 import ICategory from '../types/ICategory'
 import ISortItem from '../types/ISortItem'
 
-class DataService {
+export default class DataService {
   private _fullList: IGame[] = []
   private _currentCategory: ICategory
   private _observerCallbacks = []
@@ -29,7 +28,7 @@ class DataService {
   }
 
   private notifyObservers(): void {
-    angular.forEach(this._observerCallbacks, (callback) => {
+    this._observerCallbacks.forEach((callback: Function) => {
       callback(this.list, this.filterByCategory(this._fullList), this._fullList)
     })
   };
@@ -57,13 +56,8 @@ class DataService {
         }
         return 0
       }
-    const a = list.sort(sortCallBack)
-    console.log(a[0].Name)
-    return a
-  }
 
-  private addItems(): void {
-    this._startIndex = this._itemOnPage * this._currentPage - this._itemOnPage
+    return list.sort(sortCallBack)
   }
 
   public incCurrentPage(): void {
@@ -105,7 +99,3 @@ class DataService {
 
 
 }
-
-export default angular
-  .module('dataService', [])
-  .service('dataService', DataService)

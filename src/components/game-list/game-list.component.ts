@@ -1,6 +1,4 @@
-import angular from 'angular'
-
-class GameListComponent {
+export default class GameListComponent {
   template = require('./game-list.view.html')
   bindings = {
     list: '<',
@@ -15,7 +13,3 @@ class GameListComponent {
     }
   }
 }
-
-export default angular
-  .module('gameList', [])
-  .component('gameListComponent', new GameListComponent())
