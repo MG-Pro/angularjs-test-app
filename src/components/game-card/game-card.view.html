@@ -1,13 +1,14 @@
 <div class="game-card">
-  <div class="game-card__title">
-    {{$ctrl.gameItem.Name.en}}
-  </div>
   <img src="{{$ctrl.gameItem.ImageFullPath}}" class="game-card__pic">
+  <p class="game-card__title">
+    {{$ctrl.gameItem.Name.en}}
+  </p>
   <div class="game-card__action-bar">
     <a ui-sref="home" class="game-card__btn">Play</a>
     <span
       class="game-card__like"
-      ng-class="{active: false}"
+      ng-click="$ctrl.likeHandler()"
+      ng-class="{active: $ctrl.gameItem.isFav}"
     >❤</span>
   </div>
 

@@ -3,6 +3,8 @@ import ICategory from '../types/ICategory'
 import ISortItem from '../types/ISortItem'
 
 export default class DataService {
+  static $inject = ['storageService']
+
   private _fullList: IGame[] = []
   private _currentCategory: ICategory
   private _observerCallbacks = []
@@ -10,12 +12,30 @@ export default class DataService {
   private _currentPage: number = 1
   private _startIndex: number = 0
   private _currentSort: ISortItem
+  private _favIdList: number[]
+
+  constructor(private storageService) {
+    storageService.registerObserverCallback(this.favItemsHandler.bind(this))
+  }
+
+  private favItemsHandler(favIdList: number[]): void {
+    this._favIdList = favIdList
+    this.notifyObservers()
+  }
+
+  private setFavItems(list: IGame[]): IGame[] {
+     return  list.map(item => {
+      item.isFav = this._favIdList.includes(+item.ID);
+      return item
+    })
+  }
 
   private getPageList(): IGame[] {
     const sortedList: IGame[] = this.sorting(this._fullList)
+    const withFavList: IGame[] = this.setFavItems(sortedList)
     const {_startIndex, _itemOnPage, _currentPage} = this
 
-    return this.filterByCategory(sortedList)
+    return this.filterByCategory(withFavList)
       .slice(_startIndex, _startIndex + _itemOnPage * _currentPage)
   }
 
