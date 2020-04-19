@@ -10,19 +10,19 @@
     </div>
     <div class="control-bar__item">
       <label for="on_page">Games on page: </label>
-      <select name="" id="on_page">
-        <option
-
-          value="">Games</option>
-      </select>
+      <select
+        id="on_page"
+        ng-model="$ctrl.currentGameOnPage"
+        ng-options="option for option in $ctrl.gameOnPage"
+      ></select>
     </div>
     <div class="control-bar__item">
       <label for="sort">Sort by: </label>
-      <select name="" id="sort">
-        <option
-
-          value="">Games</option>
-      </select>
+      <select
+        id="sort"
+        ng-model="$ctrl.currentSort"
+        ng-options="option.name for option in $ctrl.sorts"
+      ></select>
     </div>
   </div>
 </div>
