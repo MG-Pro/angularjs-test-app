@@ -40,7 +40,7 @@ export default class DataService {
   }
 
   private filterByCategory(list: IGame[]): IGame[] {
-    return !this._currentCategory.ID
+    return !this._currentCategory || !this._currentCategory.ID
       ? list
       : list.filter((item: IGame) => {
         return item.CategoryID.includes(this._currentCategory.ID)

@@ -24,12 +24,12 @@ export default class HomeComponent {
       })
     }
 
-    listUpdateHandler(list: IGame[]) {
+    listUpdateHandler(list: IGame[]): void {
       this.pageList = list
       this.isLastPage = this.dataService.isLastPage
     }
 
-    addItemsHandler() {
+    addItemsHandler(): void {
       this.dataService.incCurrentPage()
     }
 

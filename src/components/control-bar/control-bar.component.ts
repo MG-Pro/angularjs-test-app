@@ -7,10 +7,10 @@ export default class ControlBarComponent {
     categoryList: '<'
   }
   controller = class {
-    static $inject = ['$scope', 'dataService']
+    static $inject = ['$scope', 'dataService', 'storageService']
 
     currentCategory: ICategory
-    categoryList: ICategory[]
+    categoryList: ICategory[] = []
     gameOnPage: number[] = [25, 50, 100]
     currentGameOnPage: number = this.gameOnPage[0]
     sorts: ISortItem[] = [
@@ -25,9 +25,9 @@ export default class ControlBarComponent {
     ]
     currentSort: ISortItem = this.sorts[0]
 
-    constructor(private $scope, private dataService) {
+    constructor(private $scope, private dataService, private storageService) {
       $scope.$watch(() => $scope.$ctrl.currentCategory, (newValue: ICategory) => {
-        this.dataService.currentCategory = newValue
+        newValue && (this.dataService.currentCategory = newValue)
       })
 
       $scope.$watch(() => $scope.$ctrl.currentGameOnPage, (newValue: number) => {
@@ -37,9 +37,32 @@ export default class ControlBarComponent {
       $scope.$watch(() => $scope.$ctrl.currentSort, (newValue: ISortItem) => {
         this.dataService.currentSort = newValue
       })
+
+    }
+
+    favListHandler(favIdList: number[]): void {
+      const favItem: ICategory = {
+        ID: 'fav',
+        Name: {
+          en: 'Favorite games'
+        }
+      }
+      const favIndex = this.categoryList.findIndex(item => item.ID === 'fav')
+
+      if (!!favIdList.length) {
+        if (favIndex < 0) {
+          this.categoryList.splice(1, 0, favItem)
+        }
+      } else {
+        if (favIndex >= 0) {
+          this.categoryList.splice(favIndex, 1)
+          this.currentCategory = this.categoryList[0]
+        }
+      }
     }
 
     $onInit() {
+
       this.categoryList.unshift({
         ID: '',
         Name: {
@@ -47,6 +70,8 @@ export default class ControlBarComponent {
         }
       })
       this.currentCategory = this.categoryList[0]
+
+      this.storageService.registerObserverCallback(this.favListHandler.bind(this))
     }
   }
 }
