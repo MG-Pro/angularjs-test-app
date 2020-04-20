@@ -15,6 +15,7 @@ export default class DataService {
   private _currentSort: ISortItem
   private _favIdList: number[]
   private _currentMerchant: IMerchant
+  private _searchString: string = ''
 
   constructor(private storageService) {
     storageService.registerObserverCallback(this.favItemsHandler.bind(this))
@@ -37,11 +38,22 @@ export default class DataService {
     const withFavList: IGame[] = this.setFavItems(sortedList)
     const {_startIndex, _itemOnPage, _currentPage} = this
 
-    return this.filterByCatAndMerch(withFavList)
+    return this.filterByAll(withFavList)
       .slice(_startIndex, _startIndex + _itemOnPage * _currentPage)
   }
 
+  private filterBySearch(list: IGame[]): IGame[] {
+    if(!this._searchString) {
+      return list
+    }
+    return list.filter((item: IGame) => {
+      const lowerString = item.Name.en.toLowerCase()
+      return lowerString.includes(this._searchString.toLowerCase())
+    })
+  }
+
   private filterByFav(list: IGame[], isFav: boolean = true): IGame[] {
+
     return list.filter((item: IGame) => {
       return isFav ? item.isFav : !item.isFav
     })
@@ -62,24 +74,26 @@ export default class DataService {
     })
   }
 
-  private filterByCatAndMerch(list: IGame[]): IGame[] {
+  private filterByAll(list: IGame[]): IGame[] {
+    const searchedList: IGame[] = this.filterBySearch(list)
+
     const catIdExist: boolean = !!(this._currentCategory && this._currentCategory.ID)
     const merchIdExist: boolean = !!(this._currentMerchant && this._currentMerchant.ID)
 
     if (!catIdExist && !merchIdExist) {
-      return list
+      return searchedList
     } else if (catIdExist && !merchIdExist) {
-      return this.filterByCategory(list)
+      return this.filterByCategory(searchedList)
     } else if (catIdExist && merchIdExist) {
-      return this.filterByCategory(this.filterByMerchant(list))
+      return this.filterByCategory(this.filterByMerchant(searchedList))
     } else if (!catIdExist && merchIdExist) {
-      return this.filterByMerchant(list)
+      return this.filterByMerchant(searchedList)
     }
   }
 
   private notifyObservers(): void {
     this._observerCallbacks.forEach((callback: Function) => {
-      callback(this.list, this.filterByCatAndMerch(this._fullList), this._fullList)
+      callback(this.list, this.filterByAll(this._fullList), this._fullList)
     })
   };
 
@@ -125,6 +139,11 @@ export default class DataService {
     this._observerCallbacks.push(callback)
   };
 
+  set searchString(string: string) {
+    this._searchString = string
+    this.notifyObservers()
+  }
+
   set currentSort(sort: ISortItem) {
     this._currentSort = sort
     this.notifyObservers()
@@ -155,7 +174,7 @@ export default class DataService {
   }
 
   get isLastPage(): boolean {
-    return this._itemOnPage * this._currentPage >= this.filterByCatAndMerch(this._fullList).length
+    return this._itemOnPage * this._currentPage >= this.filterByAll(this._fullList).length
   }
 
 

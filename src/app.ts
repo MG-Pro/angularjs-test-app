@@ -11,6 +11,7 @@ import HomeComponent from './pages/home/home.component'
 import GameListComponent from './components/game-list/game-list.component'
 import ControlBarComponent from './components/control-bar/control-bar.component'
 import GameCardComponent from './components/game-card/game-card.component'
+import SearchComponent from './components/search/search.component'
 
 import './assets/css/common.scss'
 
@@ -22,6 +23,7 @@ const app = angular
   .component('footerComponent', new FooterComponent())
   .component('controlBarComponent', new ControlBarComponent())
   .component('gameCardComponent', new GameCardComponent())
+  .component('searchComponent', new SearchComponent())
   .service('apiService', ApiService)
   .service('dataService', DataService)
   .service('storageService', StorageService)

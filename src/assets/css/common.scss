@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: none;
 }
 
 html,
@@ -220,5 +221,17 @@ a {
       background: none;
       padding: 3px;
     }
+  }
+}
+
+.search {
+  width: 450px;
+  &__input {
+    width: 100%;
+    background-color: $title_gray;
+    border: 2px solid $blue;
+    font-size: 16px;
+    padding: 3px;
+    color: $text_gray;
   }
 }

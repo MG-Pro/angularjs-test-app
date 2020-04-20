@@ -18,7 +18,6 @@ export default class HomeComponent {
 
     $onInit() {
       this.apiService.getItems().then((res) => {
-        console.log(res.data)
         this.categoryList.push(...res.data.categories)
         const merchants: IMerchant[] = Object.values(res.data.merchants)
         this.merchantList.push(...merchants)
