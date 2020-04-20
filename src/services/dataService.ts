@@ -24,8 +24,8 @@ export default class DataService {
   }
 
   private setFavItems(list: IGame[]): IGame[] {
-     return  list.map(item => {
-      item.isFav = this._favIdList.includes(+item.ID);
+    return list.map(item => {
+      item.isFav = this._favIdList.includes(+item.ID)
       return item
     })
   }
@@ -40,11 +40,20 @@ export default class DataService {
   }
 
   private filterByCategory(list: IGame[]): IGame[] {
-    return !this._currentCategory || !this._currentCategory.ID
-      ? list
-      : list.filter((item: IGame) => {
-        return item.CategoryID.includes(this._currentCategory.ID)
+    if (!this._currentCategory || !this._currentCategory.ID) {
+      return list
+    }
+
+    if (this._currentCategory.ID === 'fav') {
+      return list.filter((item: IGame) => {
+        return item.isFav
       })
+    }
+
+    return list.filter((item: IGame) => {
+      return item.CategoryID.includes(this._currentCategory.ID)
+    })
+
   }
 
   private notifyObservers(): void {

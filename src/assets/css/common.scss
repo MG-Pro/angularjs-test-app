@@ -105,9 +105,13 @@ a {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  &:after {
+    content: "";
+    flex: auto;
+  }
   &__item {
-    width: 200px;
-    height: 220px;
+    width: 210px;
+    height: 230px;
     padding: 10px;
   }
   &__footer {
