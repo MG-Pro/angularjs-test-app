@@ -1,14 +1,18 @@
 import ICategory from '../../types/ICategory'
 import ISortItem from '../../types/ISortItem'
+import IMerchant from '../../types/IMerchant'
 
 export default class ControlBarComponent {
   template = require('./control-bar.view.html')
   bindings = {
-    categoryList: '<'
+    categoryList: '<',
+    merchantList: '<'
   }
   controller = class {
     static $inject = ['$scope', 'dataService', 'storageService']
 
+    merchantList: IMerchant[] = []
+    currentMerchant: IMerchant
     currentCategory: ICategory
     categoryList: ICategory[] = []
     gameOnPage: number[] = [25, 50, 100]
@@ -27,17 +31,20 @@ export default class ControlBarComponent {
 
     constructor(private $scope, private dataService, private storageService) {
       $scope.$watch(() => $scope.$ctrl.currentCategory, (newValue: ICategory) => {
-        newValue && (this.dataService.currentCategory = newValue)
+        newValue && (dataService.currentCategory = newValue)
       })
 
       $scope.$watch(() => $scope.$ctrl.currentGameOnPage, (newValue: number) => {
-        this.dataService.itemOnPage = newValue
+        newValue && (dataService.itemOnPage = newValue)
       })
 
       $scope.$watch(() => $scope.$ctrl.currentSort, (newValue: ISortItem) => {
-        this.dataService.currentSort = newValue
+        newValue && (dataService.currentSort = newValue)
       })
 
+      $scope.$watch(() => $scope.$ctrl.currentMerchant, (newValue: IMerchant) => {
+        newValue && (dataService.currentMerchant = newValue)
+      })
     }
 
     favListHandler(favIdList: number[]): void {
@@ -62,15 +69,17 @@ export default class ControlBarComponent {
     }
 
     $onInit() {
-
       this.categoryList.unshift({
         ID: '',
-        Name: {
-          en: 'All'
-        }
+        Name: {en: 'All'}
       })
       this.currentCategory = this.categoryList[0]
 
+      this.merchantList.unshift({
+        ID: '',
+        Name: 'All'
+      })
+      this.currentMerchant = this.merchantList[0]
       this.storageService.registerObserverCallback(this.favListHandler.bind(this))
     }
   }

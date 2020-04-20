@@ -1,6 +1,7 @@
 import IGame from '../types/IGame'
 import ICategory from '../types/ICategory'
 import ISortItem from '../types/ISortItem'
+import IMerchant from '../types/IMerchant'
 
 export default class DataService {
   static $inject = ['storageService']
@@ -13,6 +14,7 @@ export default class DataService {
   private _startIndex: number = 0
   private _currentSort: ISortItem
   private _favIdList: number[]
+  private _currentMerchant: IMerchant
 
   constructor(private storageService) {
     storageService.registerObserverCallback(this.favItemsHandler.bind(this))
@@ -35,30 +37,51 @@ export default class DataService {
     const withFavList: IGame[] = this.setFavItems(sortedList)
     const {_startIndex, _itemOnPage, _currentPage} = this
 
-    return this.filterByCategory(withFavList)
+    return this.filterByCatAndMerch(withFavList)
       .slice(_startIndex, _startIndex + _itemOnPage * _currentPage)
   }
 
   private filterByCategory(list: IGame[]): IGame[] {
-    if (!this._currentCategory || !this._currentCategory.ID) {
-      return list
-    }
-
     if (this._currentCategory.ID === 'fav') {
       return list.filter((item: IGame) => {
         return item.isFav
       })
+    } else {
+      return list.filter((item: IGame) => {
+        return item.CategoryID.includes(this._currentCategory.ID)
+      })
     }
+  }
 
+  private filterByMerchant(list: IGame[]): IGame[] {
     return list.filter((item: IGame) => {
-      return item.CategoryID.includes(this._currentCategory.ID)
+      return item.MerchantID === this._currentMerchant.ID
     })
+  }
 
+  private filterByCatAndMerch(list: IGame[]): IGame[] {
+    const {
+      _currentCategory: cCat,
+      _currentMerchant: cMerch
+    } = this
+
+    const catIdExist: boolean = !!(cCat && cCat.ID)
+    const merchIdExist: boolean = !!(cMerch && cMerch.ID)
+
+    if (!catIdExist && !merchIdExist) {
+      return  list
+    } else if (catIdExist && !merchIdExist) {
+      return  this.filterByCategory(list)
+    } else if(catIdExist && merchIdExist) {
+      return  this.filterByCategory(this.filterByMerchant(list))
+    } else if(!catIdExist && merchIdExist) {
+      return  this.filterByMerchant(list)
+    }
   }
 
   private notifyObservers(): void {
     this._observerCallbacks.forEach((callback: Function) => {
-      callback(this.list, this.filterByCategory(this._fullList), this._fullList)
+      callback(this.list, this.filterByCatAndMerch(this._fullList), this._fullList)
     })
   };
 
@@ -118,12 +141,17 @@ export default class DataService {
     this.notifyObservers()
   }
 
+  set currentMerchant(merchant: IMerchant) {
+    this._currentMerchant = merchant
+    this.notifyObservers()
+  }
+
   get list(): IGame[] {
     return this.getPageList()
   }
 
   get isLastPage(): boolean {
-    return this._itemOnPage * this._currentPage >= this.filterByCategory(this._fullList).length
+    return this._itemOnPage * this._currentPage >= this.filterByCatAndMerch(this._fullList).length
   }
 
 

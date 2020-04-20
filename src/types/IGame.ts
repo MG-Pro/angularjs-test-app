@@ -3,5 +3,6 @@ export default interface IGame {
   Name: IItemName,
   CategoryID: string[],
   ImageFullPath: string,
+  MerchantID: string,
   isFav?: boolean
 }

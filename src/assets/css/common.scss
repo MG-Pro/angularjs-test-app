@@ -60,7 +60,7 @@ a {
 }
 
 .container {
-  max-width: 1100px;
+  width: 1100px;
   margin: auto;
   padding: 0 20px;
 }
@@ -200,17 +200,22 @@ a {
   padding: 10px;
   &__content {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
   &__item {
     margin-left: 50px;
     color: $blue;
+    &:first-child {
+      margin-left: 0;
+    }
     label {
       margin-right: 20px;
+      display: block;
+      margin-bottom: 5px;
     }
     select {
       border: 2px solid $blue;
-      min-width: 150px;
+      min-width: 200px;
       color: $blue;
       background: none;
       padding: 3px;

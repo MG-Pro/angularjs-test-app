@@ -9,6 +9,14 @@
       ></select>
     </div>
     <div class="control-bar__item">
+      <label for="merchant">Merchant: </label>
+      <select
+        id="merchant"
+        ng-model="$ctrl.currentMerchant"
+        ng-options="option.Name for option in $ctrl.merchantList"
+      ></select>
+    </div>
+    <div class="control-bar__item">
       <label for="on_page">Games on page: </label>
       <select
         id="on_page"
