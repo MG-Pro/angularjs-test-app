@@ -41,16 +41,19 @@ export default class DataService {
       .slice(_startIndex, _startIndex + _itemOnPage * _currentPage)
   }
 
+  private filterByFav(list: IGame[], isFav: boolean = true): IGame[] {
+    return list.filter((item: IGame) => {
+      return isFav ? item.isFav : !item.isFav
+    })
+  }
+
   private filterByCategory(list: IGame[]): IGame[] {
     if (this._currentCategory.ID === 'fav') {
-      return list.filter((item: IGame) => {
-        return item.isFav
-      })
-    } else {
-      return list.filter((item: IGame) => {
-        return item.CategoryID.includes(this._currentCategory.ID)
-      })
+      return this.filterByFav(list)
     }
+    return list.filter((item: IGame) => {
+      return item.CategoryID.includes(this._currentCategory.ID)
+    })
   }
 
   private filterByMerchant(list: IGame[]): IGame[] {
@@ -60,22 +63,17 @@ export default class DataService {
   }
 
   private filterByCatAndMerch(list: IGame[]): IGame[] {
-    const {
-      _currentCategory: cCat,
-      _currentMerchant: cMerch
-    } = this
-
-    const catIdExist: boolean = !!(cCat && cCat.ID)
-    const merchIdExist: boolean = !!(cMerch && cMerch.ID)
+    const catIdExist: boolean = !!(this._currentCategory && this._currentCategory.ID)
+    const merchIdExist: boolean = !!(this._currentMerchant && this._currentMerchant.ID)
 
     if (!catIdExist && !merchIdExist) {
-      return  list
+      return list
     } else if (catIdExist && !merchIdExist) {
-      return  this.filterByCategory(list)
-    } else if(catIdExist && merchIdExist) {
-      return  this.filterByCategory(this.filterByMerchant(list))
-    } else if(!catIdExist && merchIdExist) {
-      return  this.filterByMerchant(list)
+      return this.filterByCategory(list)
+    } else if (catIdExist && merchIdExist) {
+      return this.filterByCategory(this.filterByMerchant(list))
+    } else if (!catIdExist && merchIdExist) {
+      return this.filterByMerchant(list)
     }
   }
 
@@ -85,9 +83,15 @@ export default class DataService {
     })
   };
 
+  private sortingByFav(list: IGame[]): IGame[] {
+    const favList: IGame[] = this.filterByFav(list)
+    const restList: IGame[] = this.filterByFav(list, false)
+    return [...favList, ...restList]
+  }
+
   private sorting(list: IGame[]): IGame[] {
     if (!this._currentSort) {
-      return list
+      return this.sortingByFav(list)
     }
     const sortCallBack = this._currentSort.key === 'A-Z'
       ? (a: IGame, b: IGame) => {
@@ -109,7 +113,7 @@ export default class DataService {
         return 0
       }
 
-    return list.sort(sortCallBack)
+    return this.sortingByFav(list.sort(sortCallBack))
   }
 
   public incCurrentPage(): void {
