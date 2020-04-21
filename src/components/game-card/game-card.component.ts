@@ -13,7 +13,6 @@ export default class GameCardComponent {
     constructor(private storageService) {}
 
     likeHandler() {
-      // this.gameItem.isFav = !this.gameItem.isFav
       this.storageService.addRemoveFav(this.gameItem)
     }
   }

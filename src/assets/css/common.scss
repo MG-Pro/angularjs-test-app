@@ -138,6 +138,12 @@ a {
   font-size: 0;
   height: 100%;
   background-color: $title_gray;
+  position: relative;
+  &__pin {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
   &__title {
     font-size: 19px;
     font-weight: 700;

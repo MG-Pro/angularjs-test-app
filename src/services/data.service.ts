@@ -4,7 +4,7 @@ import ISortItem from '../types/ISortItem'
 import IMerchant from '../types/IMerchant'
 
 export default class DataService {
-  static $inject = ['storageService']
+  static $inject = ['storageService', 'configService']
 
   private _fullList: IGame[] = []
   private _currentCategory: ICategory
@@ -17,7 +17,7 @@ export default class DataService {
   private _currentMerchant: IMerchant
   private _searchString: string = ''
 
-  constructor(private storageService) {
+  constructor(private storageService, private configService) {
     storageService.registerObserverCallback(this.favItemsHandler.bind(this))
   }
 
@@ -53,7 +53,6 @@ export default class DataService {
   }
 
   private filterByFav(list: IGame[], isFav: boolean = true): IGame[] {
-
     return list.filter((item: IGame) => {
       return isFav ? item.isFav : !item.isFav
     })
@@ -71,6 +70,13 @@ export default class DataService {
   private filterByMerchant(list: IGame[]): IGame[] {
     return list.filter((item: IGame) => {
       return item.MerchantID === this._currentMerchant.ID
+    })
+  }
+
+  private filterByPriority(list: IGame[], isPriority = true): IGame[] {
+    return  list.filter((item: IGame) => {
+      const isInclude = this.configService.priorityGamesId.includes(item.ID)
+      return isPriority ? isInclude : !isInclude
     })
   }
 
@@ -96,6 +102,12 @@ export default class DataService {
       callback(this.list, this.filterByAll(this._fullList), this._fullList)
     })
   };
+
+  private sortingByPriority (list: IGame[]): IGame[] {
+    const priorityList = this.filterByPriority(list)
+    const restList = this.filterByPriority(list, false)
+    return [...priorityList, ...restList]
+  }
 
   private sortingByFav(list: IGame[]): IGame[] {
     const favList: IGame[] = this.filterByFav(list)
@@ -127,7 +139,7 @@ export default class DataService {
         return 0
       }
 
-    return this.sortingByFav(list.sort(sortCallBack))
+    return this.sortingByPriority(this.sortingByFav(list.sort(sortCallBack)))
   }
 
   public incCurrentPage(): void {
