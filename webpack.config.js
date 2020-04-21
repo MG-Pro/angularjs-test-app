@@ -18,7 +18,6 @@ module.exports = (() => {
     },
     output: {
       path: __dirname + '/dist',
-      // publicPath: '/',
       filename: isProd ? '[name].[hash].js' : '[name].bundle.js',
       chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js',
     },
@@ -28,12 +27,7 @@ module.exports = (() => {
           test: /\.ts$/,
           exclude: /node_modules/,
           use: [
-            {
-              loader: 'ts-loader',
-              // options: {
-              //   transpileOnly: true,
-              // }
-            }
+            {loader: 'ts-loader'}
           ]
         },
         {
