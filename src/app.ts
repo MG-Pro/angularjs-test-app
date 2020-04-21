@@ -6,6 +6,7 @@ import DataService from './services/data.service'
 import StorageService from './services/storage.service'
 import ApiService from './services/api.service'
 import ConfigService from './services/config.service'
+import FiltersService from './services/filters.service'
 import FooterComponent from './components/footer/footer.component'
 import HeaderComponent from './components/header/header.component'
 import HomeComponent from './pages/home/home.component'
@@ -16,6 +17,7 @@ import SearchComponent from './components/search/search.component'
 import GameComponent from './pages/game/game.component'
 
 import './assets/css/common.scss'
+import SortsService from './services/sorts.service'
 
 const app = angular
   .module('app', ['ui.router'])
@@ -31,6 +33,8 @@ const app = angular
   .service('dataService', DataService)
   .service('storageService', StorageService)
   .service('configService', ConfigService)
+  .service('filtersService', FiltersService)
+  .service('sortsService', SortsService)
   .config(routing)
 
 angular.bootstrap(document, [app.name], {
