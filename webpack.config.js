@@ -12,12 +12,13 @@ const isProd = ENV === 'build'
 module.exports = (() => {
   const config = {
     mode: isProd ? 'production' : 'development',
-    devtool: isProd ? 'source-map' : 'eval-source-map',
+    devtool: isProd ? false : 'eval-source-map',
     entry: {
       app: './src/app.ts',
     },
     output: {
       path: __dirname + '/dist',
+      publicPath: '/',
       filename: isProd ? '[name].[hash].js' : '[name].bundle.js',
       chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js',
     },
@@ -64,7 +65,7 @@ module.exports = (() => {
         template: './src/index.html',
         inject: 'body',
       }),
-      new MiniCssExtractPlugin({filename: 'css/[name].css', disable: !isProd, allChunks: true}),
+      new MiniCssExtractPlugin({filename: '[name].css', disable: !isProd, allChunks: true}),
     ],
     devServer: {
       contentBase: './src/static',
@@ -76,7 +77,7 @@ module.exports = (() => {
 
   if (isProd) {
     config.optimization = {
-      runtimeChunk: 'single',
+      runtimeChunk: false,
       minimizer: [
         new OptimizeCSSAssetsPlugin({
           cssProcessorPluginOptions: {
@@ -87,6 +88,7 @@ module.exports = (() => {
           cache: true,
           sourceMap: false,
           parallel: true,
+          extractComments: false,
         }),
       ],
     }
