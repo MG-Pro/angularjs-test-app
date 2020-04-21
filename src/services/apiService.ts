@@ -8,5 +8,14 @@ export default class ApiService {
     return this.$http.get('games.json')
   }
 
+  getItem (id: string) {
+    console.log(id)
+    return new Promise((done) => {
+      this.$http.get('games.json').then((res) => {
+        const game = res.data.games.find(item => item.ID === id)
+        done(game)
+      })
+    })
 
+  }
 }

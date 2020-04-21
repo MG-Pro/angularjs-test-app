@@ -1,12 +1,6 @@
-import ICategory from '../../types/ICategory'
-import ISortItem from '../../types/ISortItem'
-import IMerchant from '../../types/IMerchant'
-
 export default class SearchComponent {
   template = require('./search.view.html')
-  bindings = {
-    searchString: '<',
-  }
+
   controller = class {
     static $inject = ['$scope', 'dataService']
 
@@ -16,7 +10,7 @@ export default class SearchComponent {
       $scope.$watch(() => $scope.$ctrl.searchString, this.debounce(this.searchStringHandler).bind(this))
     }
 
-    searchStringHandler(newValue: ICategory) {
+    searchStringHandler(newValue: string) {
       this.dataService.searchString = newValue
     }
 

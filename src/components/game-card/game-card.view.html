@@ -4,7 +4,7 @@
     {{$ctrl.gameItem.Name.en}}
   </p>
   <div class="game-card__action-bar">
-    <a ui-sref="home" class="game-card__btn">Play</a>
+    <a ui-sref="game({id: $ctrl.gameItem.ID})" class="game-card__btn">Play</a>
     <span
       class="game-card__like"
       ng-click="$ctrl.likeHandler()"

@@ -10,6 +10,18 @@ const about = {
   component: 'aboutComponent',
 }
 
+const game = {
+  name: 'game',
+  url: '/:id',
+  component: 'gameComponent',
+  params: {
+    id: {
+      dynamic: true
+    }
+
+  }
+}
+
 routing.$inject = ['$urlRouterProvider', '$locationProvider', '$stateProvider']
 
 export function routing ($urlRouterProvider, $locationProvider, $stateProvider) {
@@ -17,6 +29,7 @@ export function routing ($urlRouterProvider, $locationProvider, $stateProvider) 
   $stateProvider
     .state(home)
     .state(about)
+    .state(game)
   $urlRouterProvider.otherwise('/')
 }
 

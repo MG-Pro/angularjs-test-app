@@ -235,3 +235,33 @@ a {
     color: $text_gray;
   }
 }
+
+.game {
+  padding: 0 10px;
+  &__header {
+    padding: 20px 0;
+  }
+  &__back-btn {
+    font-size: 26px;
+    font-weight: 700;
+    color: $blue;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  &__content {
+    display: flex;
+    &-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: $title_gray;
+    }
+  }
+  &__img {
+    max-width: 500px;
+    margin-right: 20px;
+    img {
+
+    }
+  }
+}
