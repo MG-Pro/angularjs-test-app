@@ -18,9 +18,8 @@ module.exports = (() => {
     },
     output: {
       path: __dirname + '/dist',
-      publicPath: '/',
-      filename: isProd ? '[name].[hash].js' : '[name].bundle.js',
-      chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js',
+      filename: '[name].bundle.js',
+      chunkFilename: '[name].bundle.js',
     },
     module: {
       rules: [
